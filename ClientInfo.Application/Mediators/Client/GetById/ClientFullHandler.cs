@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ClientInfo.Application.Mediators.Client.GetById
 {
-    public class ClientFullHandler : IBaseHandler<ClientFullRequest, IEnumerable<ClientFull>>
+    public class ClientFullHandler : IBaseHandler<ClientFullRequest, Response<IEnumerable<ClientFull>>>
     {
-        public Task<IEnumerable<ClientFull>> Handle(ClientFullRequest request, CancellationToken cancellationToken)
+        public Task<Response<IEnumerable<ClientFull>>> Handle(ClientFullRequest request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
