@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using ClientInfo.Application.Mediators;
 using MediatR;
+using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +31,8 @@ namespace API
         {
             services.AddControllers();
             services.AddMediatR(typeof(IBaseHandler<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(FailFastPipelineBehavior<,>));
+            services.AddScoped(typeof(IRequestExceptionHandler<,,>), typeof(BasePipelineException<,,>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
