@@ -1,8 +1,6 @@
-﻿using ClientInfo.Domain.Enums;
-
-namespace ClientInfo.Domain
+﻿namespace ClientInfo.Application.Mediators.Client.GetById
 {
-    public class Address
+    public class AddressResponse
     {
         public string ZipCode { get; set; }
         public string Street { get; set; }
@@ -10,6 +8,6 @@ namespace ClientInfo.Domain
         public string District { get; set; }
         public string City { get; set; }
         public string State { get; set; }
-        public Uf Uf { get; set; }
+        public string Uf { get; set; }
     }
 }
