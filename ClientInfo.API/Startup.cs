@@ -1,3 +1,4 @@
+using AutoMapper;
 using ClientInfo.API;
 using ClientInfo.API.Presenters;
 using ClientInfo.Application.Mediators;
@@ -35,6 +36,9 @@ namespace ClientInfo.API
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(FailFastPipelineBehavior<,>));
             services.AddScoped(typeof(IRequestExceptionHandler<,,>), typeof(BasePipelineException<,,>));
             services.AddScoped(typeof(IClientRepository), typeof(ClientQuery));
+            services.AddAutoMapper(typeof(Startup));
+            services.AddMvc().AddJsonOptions(options => { options.JsonSerializerOptions.IgnoreNullValues = true; });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ibank-client", Version = "v1" });

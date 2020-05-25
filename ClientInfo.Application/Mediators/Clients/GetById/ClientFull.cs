@@ -15,13 +15,5 @@ namespace ClientInfo.Application.Mediators.Clients.GetById
         public string Email { get; set; }
         public IEnumerable<DocumentResponse> Documents { get; set; }
         public AddressResponse Address { get; set; }
-
-        public static explicit operator ClientFull(Client client)
-        {
-            return new ClientFull
-            {
-                Name = client.Name
-            };
-        }
     }
 }

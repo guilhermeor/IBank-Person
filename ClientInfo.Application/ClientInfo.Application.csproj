@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Flunt" Version="1.0.5" />
     <PackageReference Include="MediatR" Version="8.0.1" />
     <PackageReference Include="RavenDB.Client" Version="4.2.102" />
