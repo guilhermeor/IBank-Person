@@ -2,14 +2,13 @@
 using Flunt.Validations;
 using MediatR;
 using System;
-using System.Collections.Generic;
 
-namespace ClientInfo.Application.Mediators.Client.GetById
+namespace ClientInfo.Application.Mediators.Clients.GetById
 {
-    public class ClientFullRequest : Notifiable, IRequest<Response<IEnumerable<ClientFull>>>
+    public class ClientFullRequest : Notifiable, IRequest<Response<ClientFull>>
     {
-        public Guid Id { get; set; }
-        public ClientFullRequest(Guid id)
+        public string Id { get; set; }
+        public ClientFullRequest(string id)
         {
             Id = id;
 

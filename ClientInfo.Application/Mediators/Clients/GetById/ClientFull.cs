@@ -1,13 +1,12 @@
-﻿using ClientInfo.Application.Mediators.GetById;
+﻿using ClientInfo.Domain;
 using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata;
-using System.Text;
 
-namespace ClientInfo.Application.Mediators.Client.GetById
+namespace ClientInfo.Application.Mediators.Clients.GetById
 {
     public class ClientFull
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Alias { get; set; }
         public DateTime BirthDay { get; set; }
@@ -16,5 +15,13 @@ namespace ClientInfo.Application.Mediators.Client.GetById
         public string Email { get; set; }
         public IEnumerable<DocumentResponse> Documents { get; set; }
         public AddressResponse Address { get; set; }
+
+        public static explicit operator ClientFull(Client client)
+        {
+            return new ClientFull
+            {
+                Name = client.Name
+            };
+        }
     }
 }

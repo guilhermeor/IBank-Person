@@ -1,4 +1,4 @@
-﻿namespace ClientInfo.Application.Mediators.GetById
+﻿namespace ClientInfo.Application.Mediators.Clients
 {
     public class DocumentResponse
     {

@@ -1,6 +1,6 @@
 ﻿using ClientInfo.API.Controllers;
 using ClientInfo.API.Presenters;
-using ClientInfo.Application.Mediators.Client.GetById;
+using ClientInfo.Application.Mediators.Clients.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -15,6 +15,11 @@ namespace ClientInfo.Application
             StatusCode = statusCode;
             return this;
         }
+        public Response(IReadOnlyCollection<Notification> notifications, T data)
+        {
+            AddNotifications(notifications);
+            Data = data;
+        }
 
         public T Data { get; }
         public HttpStatusCode StatusCode { get; set; } = HttpStatusCode.OK;

@@ -1,4 +1,4 @@
-﻿namespace ClientInfo.Application.Mediators.Client.GetById
+﻿namespace ClientInfo.Application.Mediators.Clients
 {
     public class AddressResponse
     {

@@ -10,14 +10,14 @@ namespace ClientInfo.Application.Mediators
     [ExcludeFromCodeCoverage]
     public class FailFastPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
             where TRequest : Notifiable, IRequest<TResponse>
-            where TResponse : Response<TResponse>, new()
+            where TResponse : Notifiable, new()
     {
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             if (request.Invalid)
             {
                 var response = new TResponse();
-                response.Errors(request.Notifications, HttpStatusCode.BadRequest);
+                response.AddNotifications(request.Notifications);
                 return Task.FromResult(response);
             }
             return next();

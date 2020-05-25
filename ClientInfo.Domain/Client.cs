@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace Domain
+namespace ClientInfo.Domain
 {
     public class Client
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Alias { get; set; }
         public DateTime BirthDay { get; set; }
@@ -18,7 +18,7 @@ namespace Domain
 
         public Client(string name, DateTime birthDay, string alias = default, int monthlyIncome = default)
         {
-            Id = Guid.NewGuid();
+            Id = Guid.NewGuid().ToString();
             Name = name;
             BirthDay = birthDay;
             Alias = alias;

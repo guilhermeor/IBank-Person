@@ -1,3 +1,4 @@
+using ClientInfo.API;
 using ClientInfo.API.Presenters;
 using ClientInfo.Application.Mediators;
 using MediatR;
@@ -8,8 +9,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
+using System;
+using System.Security.Cryptography.X509Certificates;
 
-namespace API
+namespace ClientInfo.API
 {
     public class Startup
     {
@@ -31,6 +36,26 @@ namespace API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ibank-client", Version = "v1" });
+            });
+            var settings = new Settings();
+            Configuration.Bind(settings);
+
+            var store = new DocumentStore
+            {
+                Urls = settings.Database.Urls,
+                Database = settings.Database.DatabaseName,
+                Certificate = new X509Certificate2($"{Environment.GetEnvironmentVariable("IBankClientCertificate")}/{settings.Database.CertPath}", settings.Database.CertPass)
+            };
+
+            store.Initialize();
+
+            services.AddSingleton<IDocumentStore>(store);
+
+            services.AddScoped(serviceProvider =>
+            {
+                return serviceProvider
+                    .GetService<IDocumentStore>()
+                    .OpenAsyncSession();
             });
         }
 
