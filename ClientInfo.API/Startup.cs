@@ -1,6 +1,8 @@
 using ClientInfo.API;
 using ClientInfo.API.Presenters;
 using ClientInfo.Application.Mediators;
+using ClientInfo.Domain.Repositories;
+using ClientInfo.Repository.Queries;
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
@@ -10,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Raven.Client.Documents;
-using Raven.Client.Documents.Session;
 using System;
 using System.Security.Cryptography.X509Certificates;
 
@@ -33,6 +34,7 @@ namespace ClientInfo.API
             services.AddMediatR(typeof(IBaseHandler<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(FailFastPipelineBehavior<,>));
             services.AddScoped(typeof(IRequestExceptionHandler<,,>), typeof(BasePipelineException<,,>));
+            services.AddScoped(typeof(IClientRepository), typeof(ClientQuery));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ibank-client", Version = "v1" });
@@ -80,7 +82,7 @@ namespace ClientInfo.API
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "IStop API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "IBank Client API V1");
                 c.RoutePrefix = string.Empty;
             });
         }

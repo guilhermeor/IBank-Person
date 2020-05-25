@@ -1,7 +1,6 @@
 ﻿using Flunt.Notifications;
 using MediatR;
 using System.Diagnostics.CodeAnalysis;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 

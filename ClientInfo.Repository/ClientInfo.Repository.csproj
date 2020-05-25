@@ -4,4 +4,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="RavenDB.Client" Version="4.2.102" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ClientInfo.Domain\ClientInfo.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,17 +1,16 @@
-﻿using Raven.Client.Documents.Session;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using ClientInfo.Domain;
+using ClientInfo.Domain.Repositories;
 
 namespace ClientInfo.Application.Mediators.Clients.GetById
 {
     public class ClientFullHandler : IBaseHandler<ClientFullRequest, Response<ClientFull>>
     {
-        private readonly IAsyncDocumentSession _session;
-        public ClientFullHandler(IAsyncDocumentSession session) => _session = session;
+        private readonly IClientRepository _clientRepository;
+        public ClientFullHandler(IClientRepository clientRepository) => _clientRepository = clientRepository;
         public async Task<Response<ClientFull>> Handle(ClientFullRequest request, CancellationToken cancellationToken)
         {
-            var client = await _session.LoadAsync<Client>(request.Id);
+            var client = await _clientRepository.Get(request.Id);
             return new Response<ClientFull>(request.Notifications, (ClientFull)client);
         }
     }

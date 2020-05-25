@@ -7,6 +7,6 @@ namespace ClientInfo.Domain.Repositories
     public interface IClientRepository
     {
         Task<IEnumerable<Client>> GetAll();
-        Task<Client> Get(Guid id);
+        Task<Client> Get(string id);
     }
 }
