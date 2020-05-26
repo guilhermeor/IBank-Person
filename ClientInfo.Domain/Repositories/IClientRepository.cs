@@ -6,7 +6,7 @@ namespace ClientInfo.Domain.Repositories
 {
     public interface IClientRepository
     {
-        Task<IEnumerable<Client>> GetAll();
+        Task<IEnumerable<Client>> GetAll(int pageNumber, int pageSize);
         Task<Client> Get(string id);
     }
 }

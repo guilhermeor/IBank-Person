@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Mediators\Clients\GetAll\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ClientInfo.Domain\ClientInfo.Domain.csproj" />
   </ItemGroup>
 

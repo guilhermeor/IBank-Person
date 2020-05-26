@@ -37,6 +37,7 @@ namespace ClientInfo.API
             services.AddScoped(typeof(IRequestExceptionHandler<,,>), typeof(BasePipelineException<,,>));
             services.AddScoped(typeof(IClientRepository), typeof(ClientQuery));
             services.AddAutoMapper(c => c.AddProfile<ClientMapping>(), typeof(Startup));
+            services.AddMemoryCache();
 
 
             services.AddMvc().AddJsonOptions(options => { options.JsonSerializerOptions.IgnoreNullValues = true; });

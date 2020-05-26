@@ -10,7 +10,7 @@ namespace ClientInfo.API.Controllers
         protected readonly IMediator _mediator;
         protected readonly IBasePresenter _presenter;
 
-        protected readonly int DEFAULT_PAGE_NUMBER = 1;
+        protected readonly int DEFAULT_PAGE_NUMBER = 0;
         protected readonly int DEFAULT_PAGE_SIZE = 10;
 
         public BaseController(IMediator mediator, IBasePresenter basePresenter)
