@@ -1,4 +1,6 @@
-﻿namespace ClientInfo.Application.Mediators.Clients
+﻿using ClientInfo.Domain.Enums;
+
+namespace ClientInfo.Application.Mediators.Clients
 {
     public class AddressResponse
     {
@@ -7,7 +9,6 @@
         public int Number { get; set; }
         public string District { get; set; }
         public string City { get; set; }
-        public string State { get; set; }
         public string Uf { get; set; }
     }
 }

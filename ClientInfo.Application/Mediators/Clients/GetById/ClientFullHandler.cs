@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using ClientInfo.Domain;
 using ClientInfo.Domain.Repositories;
 
 namespace ClientInfo.Application.Mediators.Clients.GetById

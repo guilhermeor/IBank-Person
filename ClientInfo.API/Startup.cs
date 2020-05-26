@@ -1,6 +1,6 @@
 using AutoMapper;
-using ClientInfo.API;
 using ClientInfo.API.Presenters;
+using ClientInfo.Application.Mappings;
 using ClientInfo.Application.Mediators;
 using ClientInfo.Domain.Repositories;
 using ClientInfo.Repository.Queries;
@@ -36,7 +36,9 @@ namespace ClientInfo.API
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(FailFastPipelineBehavior<,>));
             services.AddScoped(typeof(IRequestExceptionHandler<,,>), typeof(BasePipelineException<,,>));
             services.AddScoped(typeof(IClientRepository), typeof(ClientQuery));
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(c => c.AddProfile<ClientMapping>(), typeof(Startup));
+
+
             services.AddMvc().AddJsonOptions(options => { options.JsonSerializerOptions.IgnoreNullValues = true; });
 
             services.AddSwaggerGen(c =>
@@ -45,12 +47,11 @@ namespace ClientInfo.API
             });
             var settings = new Settings();
             Configuration.Bind(settings);
-
             var store = new DocumentStore
             {
                 Urls = settings.Database.Urls,
                 Database = settings.Database.DatabaseName,
-                Certificate = new X509Certificate2($"{Environment.GetEnvironmentVariable("IBankClientCertificate")}/{settings.Database.CertPath}", settings.Database.CertPass)
+                Certificate = new X509Certificate2($"{settings.Database.CertPath}", settings.Database.CertPass)
             };
 
             store.Initialize();

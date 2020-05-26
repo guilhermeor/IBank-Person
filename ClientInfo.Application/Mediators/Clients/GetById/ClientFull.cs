@@ -6,7 +6,7 @@ namespace ClientInfo.Application.Mediators.Clients.GetById
 {
     public class ClientFull
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Alias { get; set; }
         public DateTime BirthDay { get; set; }
