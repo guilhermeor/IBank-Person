@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ClientInfo.API.Controllers
 {
+    [Produces("application/json")]
     [ApiController]
     public class BaseController : ControllerBase
     {

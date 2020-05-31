@@ -33,9 +33,10 @@ namespace ClientInfo.API
             services.AddControllers();
             services.AddTransient<IBasePresenter, BasePresenter>();
             services.AddMediatR(typeof(IBaseHandler<,>));
+            services.AddMediatR(typeof(IBaseNotificationHandler<>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(FailFastPipelineBehavior<,>));
             services.AddScoped(typeof(IRequestExceptionHandler<,,>), typeof(BasePipelineException<,,>));
-            services.AddScoped(typeof(IClientRepository), typeof(ClientQuery));
+            services.AddScoped(typeof(IClientRepository), typeof(ClientRepository));
             services.AddAutoMapper(c => c.AddProfile<ClientMapping>(), typeof(Startup));
             services.AddMemoryCache();
 
@@ -90,6 +91,7 @@ namespace ClientInfo.API
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "IBank Client API V1");
                 c.RoutePrefix = string.Empty;
+                c.DisplayRequestDuration();
             });
         }
     }

@@ -13,6 +13,7 @@ namespace ClientInfo.API.Presenters
 
             return new OkObjectResult(response.Data);
         }
+
         private IActionResult CreateErrorResult<T>(Response<T> response) where T : class
         {
             if (response.StatusCode == HttpStatusCode.OK)

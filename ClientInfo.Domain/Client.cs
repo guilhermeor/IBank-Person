@@ -15,14 +15,8 @@ namespace ClientInfo.Domain
         public IEnumerable<Document> Documents { get; set; }
         public Address Address { get; set; }
 
-        public Client(string name, DateTime birthDay, string alias = default, int monthlyIncome = default)
-        {
-            Id = Guid.NewGuid().ToString();
-            Name = name;
-            BirthDay = birthDay;
-            Alias = alias;
-            MonthlyIncome = monthlyIncome;
-        }
+        public Client(string name, DateTime birthDay, string alias = default, int monthlyIncome = default) 
+            => (Id, Name, BirthDay, Alias, MonthlyIncome) = (Guid.NewGuid().ToString(), name, birthDay, alias, monthlyIncome);
         public Client WithAddress(Address address)
         {
             Address = address;
@@ -30,8 +24,7 @@ namespace ClientInfo.Domain
         }
         public Client WithInfoContact(string phone, string email)
         {
-            Phone = phone;
-            Email = email;
+            (Phone, Email) = (phone, email);
             return this;
         }
         public Client WithDocuments(IEnumerable<Document> documents)

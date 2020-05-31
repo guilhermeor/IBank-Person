@@ -8,12 +8,8 @@ namespace ClientInfo.Application.Mediators.Clients.GetById
     public class ClientFullRequest : Notifiable, IRequest<Response<ClientFull>>
     {
         public string Id { get; set; }
-        public int PageNumber { get; set; }
-        public int PageSize { get; set; }
-        public ClientFullRequest(string id, int pageNumber, int pageSize)
+        public ClientFullRequest(string id)
         {
-            PageNumber = pageNumber;
-            PageSize = pageSize;
             Id = id;
 
             AddNotifications(new Contract()

@@ -9,14 +9,19 @@ using System.Threading.Tasks;
 
 namespace ClientInfo.Repository.Queries
 {
-    public class ClientQuery : IClientRepository
+    public class ClientRepository : IClientRepository
     {
         private readonly IAsyncDocumentSession _session;
         private readonly IMemoryCache _cache;
-        public ClientQuery(IAsyncDocumentSession session, IMemoryCache cache)
+        public ClientRepository(IAsyncDocumentSession session, IMemoryCache cache)
         {
             _session = session;
             _cache = cache;
+        }
+
+        public void Delete(string id)
+        {
+            throw new System.NotImplementedException();
         }
 
         public async Task<Client> Get(string id) => await _cache.GetOrCreateAsync($"client/{id}", _ => _session.LoadAsync<Client>(id));
@@ -26,6 +31,17 @@ namespace ClientInfo.Repository.Queries
             return await _cache.GetOrCreateAsync("clients",
                 _ => _session.Query<Client>(collectionName: "Client")
                     .Skip(pageNumber * pageSize).Take(pageSize).ToListAsync());
+        }
+
+        public void Save(Client client)
+        {
+            _session.StoreAsync(client);
+            _session.SaveChangesAsync();
+        }
+
+        public void Update(Client client)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
