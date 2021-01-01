@@ -1,27 +1,19 @@
-﻿using Flunt.Notifications;
-using System.Collections.Generic;
+﻿using ClientInfo.Application.Extensions;
 using System.Net;
 
 namespace ClientInfo.Application
 {
-    public class Response<T> : Notifiable where T : class
+    public class Response<T> : ApiError where T : class
     {
-        public Response()
+        public Response(HttpStatusCode statusCode) => StatusCode = statusCode;
+        public Response(T result)
         {
-        }
-        public Response<T> Errors(IReadOnlyCollection<Notification> notifications, HttpStatusCode statusCode)
-        {
-            AddNotifications(notifications);
-            StatusCode = statusCode;
-            return this;
-        }
-        public Response(IReadOnlyCollection<Notification> notifications, T data)
-        {
-            AddNotifications(notifications);
-            Data = data;
+            Result = result;
+            StatusCode = HttpStatusCode.OK;
         }
 
-        public T Data { get; }
-        public HttpStatusCode StatusCode { get; set; } = HttpStatusCode.OK;
+        public bool Invalid() => !StatusCode.IsSuccess();
+        public T Result { get; }
+        public HttpStatusCode StatusCode { get; }
     }
 }

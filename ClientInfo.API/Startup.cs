@@ -1,20 +1,23 @@
-using AutoMapper;
 using ClientInfo.API.Presenters;
-using ClientInfo.Application.Mappings;
 using ClientInfo.Application.Mediators;
+using ClientInfo.Application.Mediators.Clients.Add;
+using ClientInfo.Application.Mediators.Clients.GetById;
+using ClientInfo.Application.Settings;
 using ClientInfo.Domain.Repositories;
 using ClientInfo.Repository.Queries;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Raven.Client.Documents;
-using System;
-using System.Security.Cryptography.X509Certificates;
+using MongoDB.Driver;
+using System.Globalization;
 
 namespace ClientInfo.API
 {
@@ -30,41 +33,33 @@ namespace ClientInfo.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(typeof(IClientRepository), typeof(ClientRepository));
             services.AddControllers();
             services.AddTransient<IBasePresenter, BasePresenter>();
+
             services.AddMediatR(typeof(IBaseHandler<,>));
-            services.AddMediatR(typeof(IBaseNotificationHandler<>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(FailFastPipelineBehavior<,>));
-            services.AddScoped(typeof(IRequestExceptionHandler<,,>), typeof(BasePipelineException<,,>));
-            services.AddScoped(typeof(IClientRepository), typeof(ClientRepository));
-            services.AddAutoMapper(c => c.AddProfile<ClientMapping>(), typeof(Startup));
+            services.AddScoped(typeof(IRequestExceptionHandler<,>), typeof(BasePipelineException<,>));       
+
             services.AddMemoryCache();
 
 
-            services.AddMvc().AddJsonOptions(options => { options.JsonSerializerOptions.IgnoreNullValues = true; });
+            services.AddMvc().AddJsonOptions(options => { options.JsonSerializerOptions.IgnoreNullValues = true; }).AddFluentValidation();
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ibank-client", Version = "v1" });
             });
-            var settings = new Settings();
-            Configuration.Bind(settings);
-            var store = new DocumentStore
+            services.Configure<ClientSettings>(Configuration.GetSection("ClientDbSettings"));
+            services.AddSingleton<IMongoClient>(s =>
+            new MongoClient(Configuration.GetValue<string>("ClientDbSettings:ConnectionString")));
+
+            ValidatorOptions.Global.LanguageManager = new FluentValidation.Resources.LanguageManager() {Culture = CultureInfo.GetCultureInfo("en-US") };
+            services.AddTransient<IValidator<ClientAddRequest>, ClientAddValidator>();
+            services.AddTransient<IValidator<ClientFullRequest>, ClientFullValidator>();
+            services.Configure<ApiBehaviorOptions>(options =>
             {
-                Urls = settings.Database.Urls,
-                Database = settings.Database.DatabaseName,
-                Certificate = new X509Certificate2($"{settings.Database.CertPath}", settings.Database.CertPass)
-            };
-
-            store.Initialize();
-
-            services.AddSingleton<IDocumentStore>(store);
-
-            services.AddScoped(serviceProvider =>
-            {
-                return serviceProvider
-                    .GetService<IDocumentStore>()
-                    .OpenAsyncSession();
+                options.SuppressModelStateInvalidFilter = true;
             });
         }
 

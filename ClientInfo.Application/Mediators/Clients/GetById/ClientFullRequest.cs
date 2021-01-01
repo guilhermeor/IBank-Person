@@ -1,20 +1,11 @@
-﻿using Flunt.Notifications;
-using Flunt.Validations;
-using MediatR;
+﻿using MediatR;
 using System;
 
 namespace ClientInfo.Application.Mediators.Clients.GetById
 {
-    public class ClientFullRequest : Notifiable, IRequest<Response<ClientFull>>
+    public class ClientFullRequest : IRequest<Response<ClientFull>>
     {
-        public string Id { get; set; }
-        public ClientFullRequest(string id)
-        {
-            Id = id;
-
-            AddNotifications(new Contract()
-                .IfNotNull(Id, c =>
-                c.AreNotEquals(Id, Guid.Empty, "CashInId", "Cash In Id should not be empty or null.")));
-        }
+        public Guid Id { get; set; }
+        public ClientFullRequest(Guid id) => Id = id;
     }
 }

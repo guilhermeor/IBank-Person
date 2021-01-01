@@ -1,15 +1,12 @@
-﻿using Flunt.Notifications;
-using MediatR;
-using System;
+﻿using MediatR;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ClientInfo.Application.Mediators.Clients.GetAll
 {
-    public class ClientShortRequest : Notifiable, IRequest<Response<IEnumerable<ClientShort>>>
+    public readonly struct ClientShortRequest : IRequest<Response<IEnumerable<ClientShort>>>
     {
-        public int PageNumber { get; set; }
-        public int PageSize { get; set; }
+        public int PageNumber { get; init; }
+        public int PageSize { get; init; }
 
         public ClientShortRequest(int pageNumber, int pageSize) 
             => (PageNumber, PageSize) = (pageNumber, pageSize);

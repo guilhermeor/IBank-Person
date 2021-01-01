@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ClientInfo.Domain.Repositories
@@ -6,9 +7,9 @@ namespace ClientInfo.Domain.Repositories
     public interface IClientRepository
     {
         Task<IEnumerable<Client>> GetAll(int pageNumber, int pageSize);
-        Task<Client> Get(string id);
-        void Delete(string id);
-        void Update(Client client);
-        void Save(Client client);
+        Task<Client> Get(Guid id);
+        Task Delete(string id);
+        Task Update(Client client);
+        Task Save(Client client);
     }
 }

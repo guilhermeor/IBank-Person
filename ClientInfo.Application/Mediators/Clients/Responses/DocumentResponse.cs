@@ -1,6 +1,4 @@
-﻿using ClientInfo.Domain.Enums;
-
-namespace ClientInfo.Application.Mediators.Clients
+﻿namespace ClientInfo.Application.Mediators.Clients
 {
     public class DocumentResponse
     {

@@ -1,13 +1,11 @@
 ﻿using ClientInfo.Application.Mediators.Clients.Requests;
-using Flunt.Notifications;
 using MediatR;
 using System;
-using System.Reflection;
 
 namespace ClientInfo.Application.Mediators.Clients.Add
 {
 
-    public class ClientAddRequest : Notifiable, INotification
+    public class ClientAddRequest : IRequest<Response<object>>
     {
         public string Name { get; set; }
         public string Alias { get; set; }

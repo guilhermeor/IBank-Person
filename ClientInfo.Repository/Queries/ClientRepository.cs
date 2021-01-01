@@ -1,45 +1,42 @@
-﻿using ClientInfo.Domain;
+﻿using ClientInfo.Application.Settings;
+using ClientInfo.Domain;
 using ClientInfo.Domain.Repositories;
-using Microsoft.Extensions.Caching.Memory;
-using Raven.Client.Documents;
-using Raven.Client.Documents.Session;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ClientInfo.Repository.Queries
 {
     public class ClientRepository : IClientRepository
     {
-        private readonly IAsyncDocumentSession _session;
-        private readonly IMemoryCache _cache;
-        public ClientRepository(IAsyncDocumentSession session, IMemoryCache cache)
+        protected readonly IMongoCollection<Client> _clients;
+        public ClientRepository(IMongoClient mongoClient, IOptions<ClientSettings> settings)
         {
-            _session = session;
-            _cache = cache;
+            var database = mongoClient.GetDatabase(settings.Value.DatabaseName);
+            _clients = database.GetCollection<Client>("clients");
         }
 
-        public void Delete(string id)
+        public Task Delete(string id)
         {
             throw new System.NotImplementedException();
         }
 
-        public async Task<Client> Get(string id) => await _cache.GetOrCreateAsync($"client/{id}", _ => _session.LoadAsync<Client>(id));
+        public async Task<Client> Get(Guid id) => (await _clients.FindAsync(client => client.Id.Equals(id))).FirstOrDefault();
 
         public async Task<IEnumerable<Client>> GetAll(int pageNumber, int pageSize)
         {
-            return await _cache.GetOrCreateAsync("clients",
-                _ => _session.Query<Client>(collectionName: "Client")
-                    .Skip(pageNumber * pageSize).Take(pageSize).ToListAsync());
+            return (await _clients.FindAsync(client => true))?.ToEnumerable();
         }
 
-        public void Save(Client client)
+        public Task Save(Client client)
         {
-            _session.StoreAsync(client);
-            _session.SaveChangesAsync();
+            return Task.Run(() => _clients.InsertOneAsync(client));
+
         }
 
-        public void Update(Client client)
+        public Task Update(Client client)
         {
             throw new System.NotImplementedException();
         }

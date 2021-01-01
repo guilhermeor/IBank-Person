@@ -1,26 +1,26 @@
-﻿using AutoMapper;
-using ClientInfo.Domain;
+﻿using ClientInfo.Domain;
 using ClientInfo.Domain.Repositories;
+using MediatR;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace ClientInfo.Application.Mediators.Clients.Add
 {
-    public class ClientAddHandler : IBaseNotificationHandler<ClientAddRequest>
+    public class ClientAddHandler : IRequestHandler<ClientAddRequest,Response<object>>
     {
         private readonly IClientRepository _clientRepository;
-        private readonly IMapper _mapper;
 
-        public ClientAddHandler(IClientRepository clientRepository, IMapper mapper)
+        public ClientAddHandler(IClientRepository clientRepository)
         {
             _clientRepository = clientRepository;
-            _mapper = mapper;
         }
-        public Task Handle(ClientAddRequest request, CancellationToken cancellationToken)
+
+        public Task<Response<object>> Handle(ClientAddRequest request, CancellationToken cancellationToken)
         {
-            var client = _mapper.Map<Client>(request);
-            _clientRepository.Save(client);
-            return Task.CompletedTask;
+            var client = new Client(request.Name, request.BirthDay);
+            _ = _clientRepository.Save(client);
+            return Task.FromResult(new Response<object>(HttpStatusCode.NoContent));
         }
     }
 }

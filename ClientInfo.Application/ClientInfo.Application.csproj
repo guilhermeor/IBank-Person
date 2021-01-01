@@ -3,13 +3,13 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>preview</LangVersion>
+    <CodeAnalysisRuleSet>..\.sonarlint\ibank-clientcsharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="Flunt" Version="1.0.5" />
-    <PackageReference Include="MediatR" Version="8.0.1" />
-    <PackageReference Include="RavenDB.Client" Version="4.2.102" />
+    <PackageReference Include="FluentValidation" Version="9.3.0" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="OpenCover" Version="4.7.922" />
   </ItemGroup>
 
   <ItemGroup>

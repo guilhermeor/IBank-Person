@@ -1,15 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ClientInfo.Domain;
+using System;
 
 namespace ClientInfo.Application.Mediators.Clients.GetAll
 {
-    public class ClientShort
+    public readonly struct ClientShort
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Alias { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
+        public Guid Id { get; init; }
+        public string Name { get; init; }
+        public string Alias { get; init; }
+        public string FullPhoneNumber { get; init; }
+        public string Email { get; init; }
+
+        public ClientShort(Client client)
+        {
+            Id = client.Id;
+            Name = client.Name;
+            Alias = client.Alias;
+            FullPhoneNumber = client.Phone?.FullPhoneNumber();
+            Email = client.Email;
+        }
+
+        public static implicit operator ClientShort(Client client) => new(client);
     }
 }
