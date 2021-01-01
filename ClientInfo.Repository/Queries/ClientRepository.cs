@@ -27,7 +27,7 @@ namespace ClientInfo.Repository.Queries
 
         public async Task<IEnumerable<Client>> GetAll(int pageNumber, int pageSize)
         {
-            return (await _clients.FindAsync(client => true))?.ToEnumerable();
+            return (await _clients.FindAsync(client => true)).ToEnumerable();
         }
 
         public Task Save(Client client)
