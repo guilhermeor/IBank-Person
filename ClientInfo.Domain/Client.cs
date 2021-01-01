@@ -7,7 +7,7 @@ namespace ClientInfo.Domain
 {
     public class Client
     {
-        [BsonId, BsonGuidRepresentation(GuidRepresentation.Standard)]
+        [BsonId]
         public Guid Id { get; set; } 
         [BsonElement("name")]
         public string Name { get; set; }

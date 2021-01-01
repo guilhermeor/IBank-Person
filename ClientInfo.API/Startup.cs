@@ -16,6 +16,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using System.Globalization;
 
@@ -57,10 +60,14 @@ namespace ClientInfo.API
             ValidatorOptions.Global.LanguageManager = new FluentValidation.Resources.LanguageManager() {Culture = CultureInfo.GetCultureInfo("en-US") };
             services.AddTransient<IValidator<ClientAddRequest>, ClientAddValidator>();
             services.AddTransient<IValidator<ClientFullRequest>, ClientFullValidator>();
+            services.AddTransient<IValidator<ClientFullRequest>, ClientFullValidator>();
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
+            BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;
+            BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -18,10 +18,7 @@ namespace ClientInfo.Repository.Queries
             _clients = database.GetCollection<Client>("clients");
         }
 
-        public Task Delete(string id)
-        {
-            throw new System.NotImplementedException();
-        }
+        public async Task Delete(Guid id) => await _clients.DeleteOneAsync(c => c.Id.Equals(id));
 
         public async Task<Client> Get(Guid id) => (await _clients.FindAsync(client => client.Id.Equals(id))).FirstOrDefault();
 
@@ -30,11 +27,7 @@ namespace ClientInfo.Repository.Queries
             return (await _clients.FindAsync(client => true)).ToEnumerable();
         }
 
-        public Task Save(Client client)
-        {
-            return Task.Run(() => _clients.InsertOneAsync(client));
-
-        }
+        public Task Save(Client client) => Task.Run(() => _clients.InsertOneAsync(client));
 
         public Task Update(Client client)
         {

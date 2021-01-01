@@ -8,7 +8,7 @@ namespace ClientInfo.Domain.Repositories
     {
         Task<IEnumerable<Client>> GetAll(int pageNumber, int pageSize);
         Task<Client> Get(Guid id);
-        Task Delete(string id);
+        Task Delete(Guid id);
         Task Update(Client client);
         Task Save(Client client);
     }

@@ -13,7 +13,7 @@ namespace ClientInfo.Application.Mediators.Clients.GetById
         public async Task<Response<ClientFull>> Handle(ClientFullRequest request, CancellationToken cancellationToken)
         {
             var client = await _clientRepository.Get(request.Id);
-            return client is null ? new Response<ClientFull>(HttpStatusCode.NotFound) : new Response<ClientFull>(client);
+            return client is null ? new(HttpStatusCode.NotFound) : new(client);
         }
     }
 }

@@ -11,10 +11,7 @@ namespace ClientInfo.Application.Mediators.Clients.Add
     {
         private readonly IClientRepository _clientRepository;
 
-        public ClientAddHandler(IClientRepository clientRepository)
-        {
-            _clientRepository = clientRepository;
-        }
+        public ClientAddHandler(IClientRepository clientRepository) => _clientRepository = clientRepository;
 
         public Task<Response<object>> Handle(ClientAddRequest request, CancellationToken cancellationToken)
         {
