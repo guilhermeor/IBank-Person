@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace ClientInfo.Application.Mediators.Clients.Delete
 {
-    using ObjectResult = Response<object>;
-    public class ClientDeleteHandler : IRequestHandler<ClientDeleteRequest, ObjectResult>
+    public class ClientDeleteHandler : IRequestHandler<ClientDeleteRequest, Response<object>>
     {
         private readonly IClientRepository _clientRepository;
 
         public ClientDeleteHandler(IClientRepository clientRepository) => _clientRepository = clientRepository;
 
-        public async Task<ObjectResult> Handle(ClientDeleteRequest request, CancellationToken cancellationToken)
+        public async Task<Response<object>> Handle(ClientDeleteRequest request, CancellationToken cancellationToken)
         {
             var client = await _clientRepository.Get(request.Id);
             if (client is null)

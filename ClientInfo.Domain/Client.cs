@@ -19,8 +19,8 @@ namespace ClientInfo.Domain
         public IEnumerable<Document> Documents { get; set; }
         public Address Address { get; set; }
 
-        public Client(string name, DateTime birthDay, string alias = default, int monthlyIncome = default) 
-            => (Id, Name, BirthDay, Alias, MonthlyIncome) = (Guid.NewGuid(), name, birthDay, alias, monthlyIncome);
+        public Client(string name, DateTime birthDay, string alias = default, int monthlyIncome = default, Guid id = default) 
+            => (Id, Name, BirthDay, Alias, MonthlyIncome) = (id == Guid.Empty ? Guid.NewGuid() : id, name, birthDay, alias, monthlyIncome);
         public Client WithAddress(Address address)
         {
             Address = address;

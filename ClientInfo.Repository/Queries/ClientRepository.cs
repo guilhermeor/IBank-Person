@@ -22,16 +22,10 @@ namespace ClientInfo.Repository.Queries
 
         public async Task<Client> Get(Guid id) => (await _clients.FindAsync(client => client.Id.Equals(id))).FirstOrDefault();
 
-        public async Task<IEnumerable<Client>> GetAll(int pageNumber, int pageSize)
-        {
-            return (await _clients.FindAsync(client => true)).ToEnumerable();
-        }
+        public async Task<IEnumerable<Client>> GetAll(int pageNumber, int pageSize) => (await _clients.FindAsync(client => true)).ToEnumerable();
 
         public Task Save(Client client) => Task.Run(() => _clients.InsertOneAsync(client));
 
-        public Task Update(Client client)
-        {
-            throw new System.NotImplementedException();
-        }
+        public async Task Update(Client client) => await _clients.ReplaceOneAsync(c => c.Id.Equals(client.Id), client);
     }
 }
