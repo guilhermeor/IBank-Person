@@ -1,6 +1,6 @@
-﻿using Person.API.Presenters;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Person.API.Presenters;
 
 namespace Person.API.Controllers
 {

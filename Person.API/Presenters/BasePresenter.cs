@@ -1,5 +1,5 @@
-﻿using Person.Application;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Person.Application;
 using System.Net;
 
 namespace Person.API.Presenters

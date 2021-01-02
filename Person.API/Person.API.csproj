@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Person.Application\Person.Application.csproj" />
+    <ProjectReference Include="..\Person.Bootstrap\Person.Bootstrap.csproj" />
     <ProjectReference Include="..\Person.Repository\Person.Repository.csproj" />
   </ItemGroup>
 
