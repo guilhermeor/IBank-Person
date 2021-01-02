@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using Person.Application.Settings;
@@ -16,9 +17,13 @@ namespace Person.Bootstrap
         {
             services.AddSingleton(typeof(IPersonRepository), typeof(PersonRepository));
 
-            services.Configure<PersonSettings>(config.GetSection("ClientDbSettings"));
+            services.Configure<PersonSettings>(config.GetSection("PersonDbSettings"));
+
+            var conventionPack = new ConventionPack { new CamelCaseElementNameConvention() };
+            ConventionRegistry.Register("camelCase", conventionPack, t => true);
+
             services.AddSingleton<IMongoClient>(s =>
-                new MongoClient(config.GetValue<string>("ClientDbSettings:ConnectionString")));
+                new MongoClient(config.GetValue<string>("PersonDbSettings:ConnectionString")));
 
             BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;
             BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));

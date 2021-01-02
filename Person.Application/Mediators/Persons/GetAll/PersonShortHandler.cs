@@ -10,15 +10,15 @@ namespace Person.Application.Mediators.Person.GetAll
 
     public class PersonShortHandler : IBaseHandler<PersonShortRequest, Response<IEnumerable<PersonShort>>>
     {
-        private readonly IPersonRepository _clientRepository;
-        public PersonShortHandler(IPersonRepository clientRepository) => _clientRepository = clientRepository;
+        private readonly IPersonRepository _personRepository;
+        public PersonShortHandler(IPersonRepository personRepository) => _personRepository = personRepository;
 
         public async Task<Response<IEnumerable<PersonShort>>> Handle(PersonShortRequest request, CancellationToken cancellationToken)
         {
-            var clients = _clientRepository.GetAll(request.PageNumber, request.PageSize);
-            if (clients is null)
+            var persons = _personRepository.GetAll(request.PageNumber, request.PageSize);
+            if (persons is null)
                 return new (HttpStatusCode.NotFound);
-            return new ((await clients).Select(c => (PersonShort)c));
+            return new ((await persons).Select(c => (PersonShort)c));
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Person.Domain.Repositories
         Task<IEnumerable<Person>> GetAll(int pageNumber, int pageSize);
         Task<Person> Get(Guid id);
         Task Delete(Guid id);
-        Task Update(Person client);
-        Task Save(Person client);
+        Task Update(Person person);
+        Task Save(Person person);
     }
 }

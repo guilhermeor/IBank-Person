@@ -19,12 +19,12 @@ namespace Person.Repository.Queries
 
         public async Task Delete(Guid id) => await _person.DeleteOneAsync(c => c.Id.Equals(id));
 
-        public async Task<Domain.Person> Get(Guid id) => (await _person.FindAsync(client => client.Id.Equals(id))).FirstOrDefault();
+        public async Task<Domain.Person> Get(Guid id) => (await _person.FindAsync(person => person.Id.Equals(id))).FirstOrDefault();
 
-        public async Task<IEnumerable<Domain.Person>> GetAll(int pageNumber, int pageSize) => (await _person.FindAsync(client => true)).ToEnumerable();
+        public async Task<IEnumerable<Domain.Person>> GetAll(int pageNumber, int pageSize) => (await _person.FindAsync(person => true)).ToEnumerable();
 
-        public Task Save(Domain.Person client) => Task.Run(() => _person.InsertOneAsync(client));
+        public Task Save(Domain.Person person) => Task.Run(() => _person.InsertOneAsync(person));
 
-        public async Task Update(Domain.Person client) => await _person.ReplaceOneAsync(c => c.Id.Equals(client.Id), client);
+        public async Task Update(Domain.Person person) => await _person.ReplaceOneAsync(c => c.Id.Equals(person.Id), person);
     }
 }

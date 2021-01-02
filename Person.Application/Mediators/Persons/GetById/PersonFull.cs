@@ -1,6 +1,7 @@
 ﻿using Person.Application.Mediators.Persons;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Person.Application.Mediators.Person.GetById
 {
@@ -11,22 +12,24 @@ namespace Person.Application.Mediators.Person.GetById
         public string Alias { get; set; }
         public DateTime BirthDay { get; set; }
         public int MonthlyIncome { get; set; }
-        public string Phone { get; set; }
+        public IEnumerable<string> Phones { get; set; }
         public string Email { get; set; }
         public IEnumerable<DocumentResponse> Documents { get; set; }
         public AddressResponse Address { get; set; }
 
-        public PersonFull(Domain.Person client)
+        public PersonFull(Domain.Person person)
         {
-            Id = client.Id;
-            Name = client.Name;
-            Alias = client.Alias;
-            BirthDay = client.BirthDay;
-            MonthlyIncome = client.MonthlyIncome;
-            Phone = client.Phone?.FullPhoneNumber();
-            Email = client.Email;
+            Id = person.Id;
+            Name = person.Name;
+            Alias = person.Alias;
+            BirthDay = person.BirthDay;
+            MonthlyIncome = person.MonthlyIncome;
+            Phones = person.Phones.Select(p => p.FullPhoneNumber());
+            Email = person.Email;
+            Documents = person.Documents.Select(d => (DocumentResponse)d);
+            Address = person.Address;
         }
 
-        public static implicit operator PersonFull(Domain.Person client) => new(client);
+        public static implicit operator PersonFull(Domain.Person person) => new(person);
     }
 }

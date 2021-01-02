@@ -8,18 +8,18 @@ namespace Person.Application.Mediators.Person.GetAll
         public Guid Id { get; init; }
         public string Name { get; init; }
         public string Alias { get; init; }
-        public string FullPhoneNumber { get; init; }
+        public DateTime BirthDay { get; init; }
         public string Email { get; init; }
 
-        public PersonShort(Domain.Person client)
+        public PersonShort(Domain.Person person)
         {
-            Id = client.Id;
-            Name = client.Name;
-            Alias = client.Alias;
-            FullPhoneNumber = client.Phone?.FullPhoneNumber();
-            Email = client.Email;
+            Id = person.Id;
+            Name = person.Name;
+            Alias = person.Alias;
+            Email = person.Email;
+            BirthDay = person.BirthDay;
         }
 
-        public static implicit operator PersonShort(Domain.Person client) => new(client);
+        public static implicit operator PersonShort(Domain.Person person) => new(person);
     }
 }

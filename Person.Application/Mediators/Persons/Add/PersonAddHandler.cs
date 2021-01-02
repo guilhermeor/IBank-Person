@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Person.Domain;
 using Person.Domain.Repositories;
 using System.Net;
 using System.Threading;
@@ -9,14 +8,13 @@ namespace Person.Application.Mediators.Person.Add
 {
     public class PersonAddHandler : IRequestHandler<PersonAddRequest,Response<object>>
     {
-        private readonly IPersonRepository _clientRepository;
+        private readonly IPersonRepository _personRepository;
 
-        public PersonAddHandler(IPersonRepository clientRepository) => _clientRepository = clientRepository;
+        public PersonAddHandler(IPersonRepository personRepository) => _personRepository = personRepository;
 
         public Task<Response<object>> Handle(PersonAddRequest request, CancellationToken cancellationToken)
         {
-            var client = new Domain.Person(request.Name, request.BirthDay);
-            _ = _clientRepository.Save(client);
+            _ = _personRepository.Save(request.Parse());
             return Task.FromResult(new Response<object>(HttpStatusCode.NoContent));
         }
     }

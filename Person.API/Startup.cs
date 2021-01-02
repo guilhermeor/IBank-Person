@@ -10,10 +10,7 @@ namespace Person.API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) => Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
@@ -46,7 +43,7 @@ namespace Person.API
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "IBank Client API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "IBank Person API V1");
                 c.RoutePrefix = string.Empty;
                 c.DisplayRequestDuration();
             });

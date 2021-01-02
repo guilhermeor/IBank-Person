@@ -5,7 +5,6 @@
     <LangVersion>preview</LangVersion>	  
     <UserSecretsId>e39ba46a-deb8-4cc1-80cc-5ca18bedf6d9</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <CodeAnalysisRuleSet>..\.sonarlint\ibank-clientcsharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>

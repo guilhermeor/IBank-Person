@@ -3,11 +3,12 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>preview</LangVersion>
-    <CodeAnalysisRuleSet>..\.sonarlint\ibank-clientcsharp.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\.sonarlint\ibank-personcsharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="9.3.0" />
+    <PackageReference Include="libphonenumber-csharp" Version="8.12.15" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="OpenCover" Version="4.7.922" />
   </ItemGroup>

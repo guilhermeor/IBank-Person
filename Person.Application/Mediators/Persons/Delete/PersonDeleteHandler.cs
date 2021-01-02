@@ -8,17 +8,17 @@ namespace Person.Application.Mediators.Person.Delete
 {
     public class PersonDeleteHandler : IRequestHandler<PersonDeleteRequest, Response<object>>
     {
-        private readonly IPersonRepository _clientRepository;
+        private readonly IPersonRepository _personRepository;
 
-        public PersonDeleteHandler(IPersonRepository clientRepository) => _clientRepository = clientRepository;
+        public PersonDeleteHandler(IPersonRepository personRepository) => _personRepository = personRepository;
 
         public async Task<Response<object>> Handle(PersonDeleteRequest request, CancellationToken cancellationToken)
         {
-            var client = await _clientRepository.Get(request.Id);
-            if (client is null)
+            var person = await _personRepository.Get(request.Id);
+            if (person is null)
                 return new(HttpStatusCode.NotFound);
 
-            _ = _clientRepository.Delete(client.Id);
+            _ = _personRepository.Delete(person.Id);
             return new(HttpStatusCode.NoContent);
         }
     }

@@ -10,5 +10,15 @@ namespace Person.Domain
         public string District { get; set; }
         public string City { get; set; }
         public Uf Uf { get; set; }
+
+        public Address(string zipCode, string street, int number, string district, string city, Uf uf)
+        {
+            ZipCode = zipCode;
+            Street = street;
+            Number = number;
+            District = district;
+            City = city;
+            Uf = uf;
+        }
     }
 }
