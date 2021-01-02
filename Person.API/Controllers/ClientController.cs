@@ -1,0 +1,39 @@
+﻿using Person.API.Controllers;
+using Person.API.Presenters;
+using Person.Application.Mediators.Clients.Add;
+using Person.Application.Mediators.Clients.Delete;
+using Person.Application.Mediators.Clients.GetAll;
+using Person.Application.Mediators.Clients.GetById;
+using Person.Application.Mediators.Clients.Update;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
+
+namespace API.Controllers
+{
+    public class ClientController : BaseController
+    {
+        public ClientController(ISender sender, IBasePresenter basePresenter)
+            : base(sender, basePresenter){}
+
+        [HttpGet("clients/{id}")]
+        public async Task<IActionResult> GetById(Guid id) 
+            => _presenter.GetActionResult(
+                await _sender.Send(new ClientFullRequest(id)));
+
+        [HttpGet("clients")]
+        public async Task<IActionResult> GetAll(int? pageNumber, int? pageSize)
+            => _presenter.GetActionResult(
+                await _sender.Send(new ClientShortRequest(pageNumber ?? DEFAULT_PAGE_NUMBER, pageSize ?? DEFAULT_PAGE_SIZE)));
+
+        [HttpPost("clients")]
+        public async Task<IActionResult> Add([FromBody] ClientAddRequest request) => _presenter.GetActionResult(await _sender.Send(request));
+
+        [HttpDelete("clients/{id}")]
+        public async Task<IActionResult> Delete(Guid id) => _presenter.GetActionResult(await _sender.Send(new ClientDeleteRequest(id)));
+
+        [HttpPut("clients/{id}")]
+        public async Task<IActionResult> Update([FromBody] ClientUpdateRequest request, Guid id) => _presenter.GetActionResult(await _sender.Send(request.WithId(id)));
+    }
+}
