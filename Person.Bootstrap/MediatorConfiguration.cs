@@ -11,7 +11,7 @@ namespace Person.Bootstrap
         {
             services.AddMediatR(typeof(IBaseHandler<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(FailFastPipelineBehavior<,>));
-            services.AddScoped(typeof(IRequestExceptionHandler<,>), typeof(BasePipelineException<,>));
+            services.AddScoped(typeof(IRequestExceptionHandler<,,>), typeof(BasePipelineException<,,>));
             return services;
         }
     }

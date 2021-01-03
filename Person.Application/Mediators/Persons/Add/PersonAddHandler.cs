@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Person.Application.Mediators.Person.Add
 {
-    public class PersonAddHandler : IRequestHandler<PersonAddRequest,Response<object>>
+    public class PersonAddHandler : IRequestHandler<PersonAddRequest, Response<object>>
     {
         private readonly IPersonRepository _personRepository;
 

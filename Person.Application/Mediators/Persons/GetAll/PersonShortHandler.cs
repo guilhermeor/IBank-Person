@@ -15,10 +15,10 @@ namespace Person.Application.Mediators.Person.GetAll
 
         public async Task<Response<IEnumerable<PersonShort>>> Handle(PersonShortRequest request, CancellationToken cancellationToken)
         {
-            var persons = _personRepository.GetAll(request.PageNumber, request.PageSize);
+            var persons = await _personRepository.GetAll(request.PageNumber, request.PageSize);
             if (persons is null)
-                return new (HttpStatusCode.NotFound);
-            return new ((await persons).Select(c => (PersonShort)c));
+                return new(HttpStatusCode.NotFound);
+            return new(persons.Select(c => (PersonShort)c));
         }
     }
 }

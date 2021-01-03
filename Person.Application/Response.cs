@@ -5,6 +5,10 @@ namespace Person.Application
 {
     public class Response<T> : ApiError where T : class
     {
+        public Response()
+        {
+
+        }
         public Response(HttpStatusCode statusCode) => StatusCode = statusCode;
         public Response(T result)
         {
