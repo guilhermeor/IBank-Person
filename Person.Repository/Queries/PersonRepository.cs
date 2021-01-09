@@ -21,7 +21,7 @@ namespace Person.Repository.Queries
 
         public async Task<Domain.Person> Get(Guid id) => (await _person.FindAsync(person => person.Id.Equals(id))).FirstOrDefault();
 
-        public async Task<IEnumerable<Domain.Person>> GetAll(int pageNumber, int pageSize) => (await _person.FindAsync(person => true)).ToEnumerable();
+        public async Task<IEnumerable<Domain.Person>> GetAll(int pageNumber, int pageSize) => await (await _person.FindAsync(person => true)).ToListAsync();
 
         public Task Save(Domain.Person person) => Task.Run(() => _person.InsertOneAsync(person));
 

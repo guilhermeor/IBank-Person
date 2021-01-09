@@ -13,6 +13,7 @@ namespace Person.Bootstrap
             services.ConfigureSwagger();
             services.ConfigureRepositories(config);
             services.ConfigureValidators();
+            services.ConfigureJaeger(config);
         }
     }
 }

@@ -3,13 +3,17 @@ using System;
 
 namespace Person.Application.Mediators.Person.GetAll
 {
-    public readonly struct PersonShort
+    public class PersonShort
     {
-        public Guid Id { get; init; }
-        public string Name { get; init; }
-        public string Alias { get; init; }
-        public DateTime BirthDay { get; init; }
-        public string Email { get; init; }
+        public PersonShort()
+        {
+
+        }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Alias { get; set; }
+        public DateTime BirthDay { get; set; }
+        public string Email { get; set; }
 
         public PersonShort(Domain.Person person)
         {
