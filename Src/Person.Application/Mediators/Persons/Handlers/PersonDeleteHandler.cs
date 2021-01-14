@@ -1,10 +1,11 @@
 ﻿using MediatR;
+using Person.Application.Mediators.Persons.Records.Requests;
 using Person.Domain.Repositories;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Person.Application.Mediators.Person.Delete
+namespace Person.Application.Mediators.Person.Handlers
 {
     public class PersonDeleteHandler : IRequestHandler<PersonDeleteRequest, Response<object>>
     {

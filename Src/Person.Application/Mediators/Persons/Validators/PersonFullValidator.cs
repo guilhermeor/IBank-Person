@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
-namespace Person.Application.Mediators.Person.GetById
+using Person.Application.Mediators.Persons.Records.Requests;
+
+namespace Person.Application.Mediators.Person.Validators
 {
     public class PersonFullValidator : AbstractValidator<PersonFullRequest>
     {

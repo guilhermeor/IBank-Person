@@ -7,12 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OpenTracing;
 using OpenTracing.Util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Person.Bootstrap
 {
@@ -27,7 +21,7 @@ namespace Person.Bootstrap
             services.AddScoped<TracingActionFilter>();
             services.AddSingleton(serviceProvider =>
             {
-                string serviceName = Assembly.GetEntryAssembly().GetName().Name;
+                string serviceName = "IBank-Person";
 
                 ILoggerFactory loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
 

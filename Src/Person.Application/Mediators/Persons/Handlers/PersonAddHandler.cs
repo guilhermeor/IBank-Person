@@ -1,12 +1,12 @@
-﻿using MediatR;
+﻿using Person.Application.Mediators.Persons.Records.Requests;
 using Person.Domain.Repositories;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Person.Application.Mediators.Person.Add
+namespace Person.Application.Mediators.Person.Handlers
 {
-    public class PersonAddHandler : IRequestHandler<PersonAddRequest, Response<object>>
+    public class PersonAddHandler : IBaseHandler<PersonAddRequest, Response<object>>
     {
         private readonly IPersonRepository _personRepository;
 
@@ -14,7 +14,7 @@ namespace Person.Application.Mediators.Person.Add
 
         public Task<Response<object>> Handle(PersonAddRequest request, CancellationToken cancellationToken)
         {
-            _ = _personRepository.Save(request.Parse());
+            _ = _personRepository.Save(request.ToPerson());
             return Task.FromResult(new Response<object>(HttpStatusCode.NoContent));
         }
     }

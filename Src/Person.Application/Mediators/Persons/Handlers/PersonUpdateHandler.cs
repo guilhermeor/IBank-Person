@@ -1,10 +1,11 @@
 ﻿using MediatR;
+using Person.Application.Mediators.Persons.Records.Requests;
 using Person.Domain.Repositories;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Person.Application.Mediators.Person.Update
+namespace Person.Application.Mediators.Person.Handlers
 {
     public class PersonUpdateHandler : IRequestHandler<PersonUpdateRequest, Response<object>>
     {
@@ -18,7 +19,7 @@ namespace Person.Application.Mediators.Person.Update
             if (person is null)
                 return new(HttpStatusCode.NotFound);
 
-            _ = _personRepository.Update(request.Parse());
+            _ = _personRepository.Update(request.ToPerson());
             return new(HttpStatusCode.NoContent);
         }
     }

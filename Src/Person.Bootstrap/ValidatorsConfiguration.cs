@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Person.Application.Mediators.Person.Add;
-using Person.Application.Mediators.Person.GetById;
+using Person.Application.Mediators.Person.Validators;
+using Person.Application.Mediators.Persons.Records.Requests;
 using System.Globalization;
 
 namespace Person.Bootstrap

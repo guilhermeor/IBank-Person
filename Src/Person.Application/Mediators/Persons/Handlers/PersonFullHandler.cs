@@ -1,9 +1,11 @@
-﻿using Person.Domain.Repositories;
+﻿using Person.Application.Mediators.Persons.Records.Requests;
+using Person.Application.Mediators.Persons.Records.Responses;
+using Person.Domain.Repositories;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Person.Application.Mediators.Person.GetById
+namespace Person.Application.Mediators.Person.Handlers
 {
     public class PersonFullHandler : IBaseHandler<PersonFullRequest, Response<PersonFull>>
     {

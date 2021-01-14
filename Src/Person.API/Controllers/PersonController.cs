@@ -1,12 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-
 using Person.API.Presenters;
-using Person.Application.Mediators.Person.Add;
-using Person.Application.Mediators.Person.Delete;
-using Person.Application.Mediators.Person.GetAll;
-using Person.Application.Mediators.Person.GetById;
-using Person.Application.Mediators.Person.Update;
+using Person.Application.Mediators.Persons.Records.Requests;
 using System;
 using System.Threading.Tasks;
 
@@ -15,10 +10,10 @@ namespace Person.API.Controllers
     public class PersonController : BaseController
     {
         public PersonController(ISender sender, IBasePresenter basePresenter)
-            : base(sender, basePresenter){}
+            : base(sender, basePresenter) { }
 
         [HttpGet("persons/{id}")]
-        public async Task<IActionResult> GetById(Guid id) 
+        public async Task<IActionResult> GetById(Guid id)
             => _presenter.GetActionResult(
                 await _sender.Send(new PersonFullRequest(id)));
 
@@ -34,6 +29,6 @@ namespace Person.API.Controllers
         public async Task<IActionResult> Delete(Guid id) => _presenter.GetActionResult(await _sender.Send(new PersonDeleteRequest(id)));
 
         [HttpPut("persons/{id}")]
-        public async Task<IActionResult> Update([FromBody] PersonUpdateRequest request, Guid id) => _presenter.GetActionResult(await _sender.Send(request.WithId(id)));
+        public async Task<IActionResult> Update([FromBody] PersonUpdateRequest request, Guid id) => _presenter.GetActionResult(await _sender.Send(request with { Id = id }));
     }
 }

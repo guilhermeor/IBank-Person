@@ -1,7 +1,7 @@
 ﻿using Person.Domain;
 using Person.Domain.Enums;
 
-namespace Person.Application.Mediators.Person.Requests
+namespace Person.Application.Mediators.Persons.Records.Requests
 {
     public class DocumentRequest
     {

@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using OpenTracing;
+using Person.Application.Extensions;
 using System;
-using System.Net;
-using System.Text.Json;
 
 namespace Person.Bootstrap
 {
@@ -28,12 +26,12 @@ namespace Person.Bootstrap
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            if (context.HttpContext.Response.StatusCode != (int)HttpStatusCode.OK)
-                _tracer.ActiveSpan?.Log("Request unsuccessful!");
-            else
+            if (context.HttpContext.Response.StatusCode.IsSuccess())
                 _tracer.ActiveSpan?.Log("Request successful!");
+            else
+                _tracer.ActiveSpan?.Log("Request unsuccessful!");
 
-            _tracer.ActiveSpan.SetTag("ResultData", JsonSerializer.Serialize((ObjectResult)context.Result)).Finish();
+            _tracer.ActiveSpan.SetTag("ResultData", Newtonsoft.Json.JsonConvert.SerializeObject(context.Result)).Finish();
         }
     }
 }

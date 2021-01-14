@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using Person.Application.Mediators.Person.Update;
+using Person.Application.Mediators.Persons.Records.Requests;
 
-namespace Person.Application.Mediators.Persons.Update
+namespace Person.Application.Mediators.Person.Validators
 {
     public class PersonUpdateValidator : AbstractValidator<PersonUpdateRequest>
     {
