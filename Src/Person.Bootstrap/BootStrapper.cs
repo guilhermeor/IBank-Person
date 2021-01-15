@@ -9,6 +9,7 @@ namespace Person.Bootstrap
         public static void RegisterServices(IServiceCollection services, IConfiguration config)
         {
             services.AddMvc().AddJsonOptions(options => { options.JsonSerializerOptions.IgnoreNullValues = true; }).AddFluentValidation();
+            services.CacheConfigurationServices(config);
             services.ConfigureMediator();
             services.ConfigureSwagger();
             services.ConfigureRepositories(config);

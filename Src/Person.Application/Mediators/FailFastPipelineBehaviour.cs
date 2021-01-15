@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
+using OpenTracing;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -15,27 +16,32 @@ namespace Person.Application.Mediators
             where TResponse : ApiError, new()
     {
 
-        private readonly IEnumerable<IValidator<TRequest>> _validators;
+        private readonly IEnumerable<IValidator<TRequest>> validators;
+        private readonly ITracer tracer;
 
-        public FailFastPipelineBehavior(IEnumerable<IValidator<TRequest>> validators)
+        public FailFastPipelineBehavior(IEnumerable<IValidator<TRequest>> validators, ITracer tracer)
         {
-            _validators = validators;
+            this.validators = validators;
+            this.tracer = tracer;
         }
 
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
 
-            if (!_validators.Any())
+            if (!validators.Any())
                 return next();
 
-            var failures = _validators
+            var failures = validators
                 .Select(v => v.Validate(request))
                 .SelectMany(result => result.Errors)
                 .Where(f => f != null);
 
-            return failures.Any()
-                ? Task.FromResult(Errors(failures))
-                : next();
+            if (failures.Any())
+            {
+                tracer.ActiveSpan.SetTag("validation", false);
+                return Task.FromResult(Errors(failures));
+            }
+            return next();
 
         }
 

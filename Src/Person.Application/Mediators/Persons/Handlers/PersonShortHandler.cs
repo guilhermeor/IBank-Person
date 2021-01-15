@@ -18,9 +18,7 @@ namespace Person.Application.Mediators.Person.Handlers
         public async Task<Response<IEnumerable<PersonShort>>> Handle(PersonShortRequest request, CancellationToken cancellationToken)
         {
             var persons = await _personRepository.GetAll(request.PageNumber, request.PageSize);
-            if (persons is null)
-                return new(HttpStatusCode.NotFound);
-            return new(persons.Select(c => (PersonShort)c));
+            return persons is null ? new(HttpStatusCode.NotFound) : new(persons.Select(c => (PersonShort)c));
         }
     }
 }

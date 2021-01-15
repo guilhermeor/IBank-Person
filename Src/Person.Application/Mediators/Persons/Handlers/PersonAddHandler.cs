@@ -12,10 +12,13 @@ namespace Person.Application.Mediators.Person.Handlers
 
         public PersonAddHandler(IPersonRepository personRepository) => _personRepository = personRepository;
 
-        public Task<Response<object>> Handle(PersonAddRequest request, CancellationToken cancellationToken)
+        public async Task<Response<object>> Handle(PersonAddRequest request, CancellationToken cancellationToken)
         {
+            if (await _personRepository.Exists(p => p.Email.Equals(request.Email)))
+                return new(HttpStatusCode.Conflict);
+
             _ = _personRepository.Save(request.ToPerson());
-            return Task.FromResult(new Response<object>(HttpStatusCode.NoContent));
+            return new(HttpStatusCode.NoContent);
         }
     }
 }

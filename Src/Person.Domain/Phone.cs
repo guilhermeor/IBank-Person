@@ -2,6 +2,10 @@
 {
     public class Phone
     {
+        public Phone()
+        {
+
+        }
         public string CountryCallingCode { get; set; }
         public string AreaCode { get; set; }
         public string Number { get; set; }

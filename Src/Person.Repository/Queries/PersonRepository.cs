@@ -4,6 +4,7 @@ using Person.Application.Settings;
 using Person.Domain.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Person.Repository.Queries
@@ -22,6 +23,8 @@ namespace Person.Repository.Queries
         public async Task<Domain.Person> Get(Guid id) => (await _person.FindAsync(person => person.Id.Equals(id))).FirstOrDefault();
 
         public async Task<IEnumerable<Domain.Person>> GetAll(int pageNumber, int pageSize) => await (await _person.FindAsync(person => true)).ToListAsync();
+
+        public async Task<bool> Exists(Expression<Func<Domain.Person, bool>> filterExpression) => await _person.CountDocumentsAsync(filterExpression) > 0;
 
         public Task Save(Domain.Person person) => Task.Run(() => _person.InsertOneAsync(person));
 
