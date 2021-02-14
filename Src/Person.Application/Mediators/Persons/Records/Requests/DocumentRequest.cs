@@ -3,11 +3,8 @@ using Person.Domain.Enums;
 
 namespace Person.Application.Mediators.Persons.Records.Requests
 {
-    public class DocumentRequest
+    public record DocumentRequest(DocumentType Type, string Number)
     {
-        public DocumentType Type { get; set; }
-        public string Number { get; set; }
-
         public Document Parse() => new(Type, Number);
     }
 }

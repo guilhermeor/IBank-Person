@@ -7,7 +7,8 @@ namespace Person.Application.Mediators.Person.Validators
 	{
 		public PersonAddValidator()
 		{
-			RuleFor(x => x.Name).NotEmpty();
+			RuleFor(x => x.Name.FirstName).NotEmpty();
+			RuleFor(x => x.Name.LastName).NotEmpty();
 			RuleFor(x => x.Email).EmailAddress();
 			RuleFor(x => x.Alias).MinimumLength(3);
 		}

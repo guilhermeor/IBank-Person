@@ -1,4 +1,5 @@
 ﻿using Person.Domain;
+using Person.Domain.ValueObjects;
 using PhoneNumbers;
 using System.Linq;
 
